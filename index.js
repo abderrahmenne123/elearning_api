@@ -11,12 +11,12 @@ mongoose.connect(config.DATABASE, {useNewUrlParser: true,useUnifiedTopology:true
 }).catch(err=>{
     console.log(err); 
 });
-app.use(bodyparser.json()); 
+app.use(bodyparser.json()); // permet de 'accesser au 'Body' de la requete envoyé 
 app.use(bodyparser.urlencoded({extended:false})); 
 
 //Declare Routes 
 
-app.use('/users',userRoutes); 
+app.use('/users',userRoutes); // affecter tous les sous-routes de users vers '/users' donc à chaque fois on doit appler un route de UsersRoute on doit avant utiliser /users 
 
 // var users = [
 //     "user 1","user 2","user 3","user 4",
@@ -46,6 +46,6 @@ app.use('/users',userRoutes);
 //         'result':users
 //     })
 // })
-app.listen(3000,()=>{
+app.listen(3000,()=>{ // ecoute sur le port definit et crée le server 
     console.log("Server is running"); 
 })

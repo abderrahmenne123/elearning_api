@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken') ;
 const config = require('../config/config');
 module.exports.registerUser=async (req,res)=>{
 
-let result = await User.findOne({
+let result = await User.findOne({ // verifier si l'utilisateur existe 
     'email':req.body.email
 }); 
 if(result){
@@ -12,7 +12,7 @@ if(result){
         'message':'email existant '
     })
 }else
-{  let hashedPassword = await bcrypt.hash(req.body.password,10) ; 
+{  let hashedPassword = await bcrypt.hash(req.body.password,10) ; // crypté le mot de passe 
    let newUSer = new User({
        name:req.body.name, 
        firstName:req.body.firstName,
@@ -21,9 +21,9 @@ if(result){
        password:hashedPassword, 
        type : req.body.type 
    }); 
-   let result = await newUSer.save() ; 
+   let result = await newUSer.save() ; // attend l'enregistrement du nouveau utilisateur
    res.json({
-    'message':result
+    'message':result // reponse à envoyé vers la partie client
 })
 }
 
@@ -31,9 +31,9 @@ if(result){
 
 module.exports.loginUser=async (req,res)=>{
 
-    const email = req.body.email ; 
+    const email = req.body.email ; // recupération de la valeur email d'utilisateur
     const password = req.body.password ; 
-    let result = await User.findOne({'email':email}); 
+    let result = await User.findOne({'email':email});  // recherche si l'utilisateur existe et l'affécté à la variable result 
     if(result)
     { console.log(result.password); 
         
@@ -41,7 +41,7 @@ module.exports.loginUser=async (req,res)=>{
         console.log(verif); 
         if(verif)
         {
-            let token =  jwt.sign({ id: result._id },config.SECRET, {
+            let token =  jwt.sign({ id: result._id },config.SECRET, { // generation du token de l'authentification
                 expiresIn: 86400 // expires in 24 hours
               });
               res.json({
@@ -67,7 +67,7 @@ module.exports.loginUser=async (req,res)=>{
 
 module.exports.getAllUsers= async (req,res)=>{
 
-    let result = await User.find(); 
+    let result = await User.find(); // recupération de tous les utilisateurs 
     res.json({
         'users':result
     })
@@ -75,7 +75,7 @@ module.exports.getAllUsers= async (req,res)=>{
 
 module.exports.getUsersByType= async (req,res)=>{
 
-    let result = await User.find({
+    let result = await User.find({ // recherche tous les utilisateurs selon un type données
         type :req.params.type
     }); 
     res.json({
@@ -85,7 +85,7 @@ module.exports.getUsersByType= async (req,res)=>{
 
 module.exports.deleteUser = async (req,res)=>{
 try {
-    await User.findByIdAndDelete(req.params.id); 
+    await User.findByIdAndDelete(req.params.id); // supression d'un utilisateur 
 
     res.json({
         'message':'success'
