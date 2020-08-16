@@ -8,7 +8,7 @@ router.post('/add',UserController.registerUser);
 router.post('/login',UserController.loginUser); 
 router.get('/',verifToken,isAdmin,UserController.getAllUsers) ; 
 router.get('/:role',verifToken,UserController.getUsersByType); 
-
+router.delete('/:id',verifToken,isAdmin,UserController.deleteUser); 
 
 
 module.exports= router ; 
