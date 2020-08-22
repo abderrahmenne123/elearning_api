@@ -3,8 +3,9 @@ const bodyparser = require('body-parser');
 const mongoose = require('mongoose'); 
 const config = require('./config/config');
 const userRoutes = require('./routes/users.routes') ; 
-
-
+const coursesRoutes = require('./routes/course.routes'); 
+const roleRoutes = require('./routes/roles.routes'); 
+const permissionsRoute = require('./routes/permissions.routes'); 
 const app = express(); 
 mongoose.connect(config.DATABASE, {useNewUrlParser: true,useUnifiedTopology:true}).then(()=>{
     console.log("Connected to database ");
@@ -17,7 +18,9 @@ app.use(bodyparser.urlencoded({extended:false}));
 //Declare Routes 
 
 app.use('/users',userRoutes); // affecter tous les sous-routes de users vers '/users' donc à chaque fois on doit appler un route de UsersRoute on doit avant utiliser /users 
-
+app.use('/courses/',coursesRoutes);
+app.use('/roles',roleRoutes);  
+app.use('/permissions',permissionsRoute); 
 // var users = [
 //     "user 1","user 2","user 3","user 4",
 // ]

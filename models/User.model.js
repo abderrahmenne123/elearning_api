@@ -6,8 +6,8 @@ const UserModal = new mongoose.Schema({
 'email':String, 
 'password':String, 
 'phone':Number,
-Roles:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Role' }], 
-type:Number
+'permissions':[{ type: mongoose.Schema.Types.ObjectId, ref: 'Permission' }], 
+'role':{type:mongoose.Schema.Types.ObjectId,ref:'Role'}
 }); 
 
 module.exports =mongoose.model('User',UserModal); 
