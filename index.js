@@ -4,9 +4,14 @@ const mongoose = require('mongoose');
 const config = require('./config/config');
 const userRoutes = require('./routes/users.routes') ; 
 const coursesRoutes = require('./routes/course.routes'); 
+const activitesRoutes = require('./routes/activites.routes'); 
+const answerRoutes = require('./routes/answer.routes'); 
 const roleRoutes = require('./routes/roles.routes'); 
 const permissionsRoute = require('./routes/permissions.routes'); 
+const fileUpload = require('express-fileupload');
 const app = express(); 
+//const multer=require("multer");
+//const fileupload = require('express-fileupload');
 mongoose.connect(config.DATABASE, {useNewUrlParser: true,useUnifiedTopology:true}).then(()=>{
     console.log("Connected to database ");
 }).catch(err=>{
@@ -21,6 +26,8 @@ app.use('/users',userRoutes); // affecter tous les sous-routes de users vers '/u
 app.use('/courses/',coursesRoutes);
 app.use('/roles',roleRoutes);  
 app.use('/permissions',permissionsRoute); 
+app.use('/activit',activitesRoutes);  
+app.use('/answer',answerRoutes);  
 // var users = [
 //     "user 1","user 2","user 3","user 4",
 // ]

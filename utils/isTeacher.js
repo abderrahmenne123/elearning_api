@@ -1,15 +1,20 @@
-const isTeacher = (req,res,next)=>{
+const Role = require("../models/Role.model");
 
-    let role = req.headers['role'] ; 
-    
-    if(role!=1)
-    {
-        res.json({'message':'Vous etes pas autorisé'})
-    }else 
-    {
-        next(); 
+const isTeacher = async (req, res, next) => {
+  let role = req.headers["role"];
+  if (!role) {
+    res.json({ message: "Vous etes pas autorisé" });
+  } else {
+    let selectedRole = await Role.findById(role);
+    if (
+      selectedRole.role.toLowerCase().trim() !=
+      "Instructor".toLowerCase().trim()
+    ) {
+      res.json({ message: "Vous etes pas autorisé" });
+    } else {
+      next();
     }
-    
-    }
-    
-module.exports=isTeacher ; 
+  }
+};
+
+module.exports = isTeacher;

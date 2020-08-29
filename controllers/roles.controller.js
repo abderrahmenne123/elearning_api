@@ -13,7 +13,23 @@ module.exports.addRole = async (req, res) => {
   } else {
     res.json({
       message: "Erreur est servenu",
+      error: true,
+    });
+  }
+};
+
+module.exports.getAllRoles = async (req, res) => {
+  try {
+    let result = await Role.find();
+
+    res.json({
+      message: result,
       error: false,
+    });
+  } catch (error) {
+    res.json({
+      message: error,
+      error: true,
     });
   }
 };

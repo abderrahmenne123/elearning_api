@@ -32,7 +32,7 @@ module.exports.getAllactivites= async (req,res)=>{
 }
 module.exports.deleteactivities = async (req,res)=>{
     try {
-        await cours.findByIdAndDelete(req.params.id); // supression d'un utilisateur 
+        await activittes.findByIdAndDelete(req.params.id); // supression d'un utilisateur 
     
         res.json({
             'message':'success'
@@ -51,8 +51,11 @@ module.exports.deleteactivities = async (req,res)=>{
             const dataToUpdate = req.body;
             let { ...updateData } = dataToUpdate;
     
-            let result = await cours.findOneAndUpdate(req.params.id,updateData,{new:true})
+            let result = await activittes.findOneAndUpdate(req.params.id,updateData,{new:true})
         } catch (error) {
             
         }
+        res.json({
+            message: "update ...",
+            error: false,})
     }
